@@ -34,13 +34,13 @@ function Description({
 		if (videoId) {
 			dispatch(
 				getVideoComments({
-					videoId: '660e7aec2fb691d504bd6ad4',
+					videoId: videoKey,
 					page: 1,
 					limit: 10,
 				}),
 			);
 		}
-		// return () => dispatch(cleanUpComments());
+		return () => dispatch(cleanUpComments());
 	}, [dispatch, videoId]);
 	console.log("comments", comments);
 
@@ -115,11 +115,15 @@ function Description({
 								{timeCreated(createdAt)}
 							</div>
 						</div>
-						<div className="flex items-start pl-3 pb-2">
+						<div className="flex flex-start pl-3 pb-2">
 							{description}
 						</div>
 					</div>
 				</div>
+			</div>
+
+			<div>
+
 			</div>
 		</div>
 	);

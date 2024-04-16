@@ -23,9 +23,11 @@ export const toggleVideoLike = createAsyncThunk("toggleVideoLike",
 export const toggleCommentLike = createAsyncThunk("toggleCommentLike",
     async (commentId) => {
         try {
-            const response = await axiosInstance.get(`/likes/toggle/c/${commentId}`);
+            const response = await axiosInstance.post(`/likes/toggle/c/${commentId}`);
+            console.log("response from commentlike :",response.data.data)
             return response.data.data;
         } catch (error) {
+            console.log("error from commentlike ",error?.response?.data?.error)
             toast.error(error?.response?.data?.error);
             throw error;
         }

@@ -10,6 +10,9 @@ import {
 	getVideoComments,
 	cleanUpComments,
 } from "../store/Slices/commentSlice";
+import CommentList from "../components/CommentList";
+import { v4 as uuidv4 } from "uuid";
+import SendComment from "../components/SendComment";
 
 function VideoDetail() {
 	const dispatch = useDispatch();
@@ -19,10 +22,9 @@ function VideoDetail() {
 	const totalComments = useSelector((state) => state?.comment?.totalComments);
 	const comments = useSelector((state) => state?.comment?.comments);
 
-
-	useEffect(()=>{
+	useEffect(() => {
 		dispatch(getVideoById({ videoId }));
-	},[dispatch,videoId])
+	}, [dispatch, videoId]);
 
 	// console.log(video);
 	// useEffect(() => {
@@ -45,6 +47,7 @@ function VideoDetail() {
 	const playerRef = React.useRef(null);
 	const videoURL = video?.videoFile?.url;
 	const thumbnailURL = video?.thumbnail?.url;
+	const uniqueId = uuidv4()
 	const parts = videoURL
 		? videoURL.split(".")[videoURL.split(".").length - 1]
 		: "";
@@ -122,6 +125,26 @@ function VideoDetail() {
 
 			<div className="text-black font-semibold sm:px-5 px-3">
 				{totalComments} Comments
+			</div>
+			<SendComment
+				comment={true}
+				videoId={video?._id}
+			/>
+
+			<div className="w-full sm:max-w-4xl">
+				{comments?.map((comment) => (
+					<CommentList
+						key={uuidv4()}
+						avatar={comment?.owner?.avatar}
+						commentId={comment?._id}
+						content={comment?.content}
+						createdAt={comment?.createdAt}
+						fullName={comment?.owner?.fullName}
+						isLiked={comment?.isLiked}
+						likesCount={comment?.totalLikes}
+						username={comment?.owner?.username}
+					/>
+				))}
 			</div>
 		</>
 	);

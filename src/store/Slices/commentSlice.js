@@ -46,15 +46,17 @@ export const editAComment = createAsyncThunk(
 
 export const deleteAComment = createAsyncThunk(
 	"deleteAComment",
-	async ({ commentId }) => {
+	async ( commentId ) => {
 		try {
+			console.log("commentId in comment slice : ", commentId)
 			const response = await axiosInstance.delete(
-				`/comments/${commentId}`,
+				`/comments/c/${commentId}`,
 			);
 			toast.success(response.data.message);
 			return response.data.data;
 		} catch (error) {
-			toast.error(error?.response?.data?.error);
+			console.log("error in delete comment : ",error?.message)
+			toast.error(error?.message);
 			throw error;
 		}
 	},
