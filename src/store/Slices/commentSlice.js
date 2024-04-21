@@ -14,7 +14,7 @@ export const createAComment = createAsyncThunk(
 	"createAComment",
 	async ({ videoId, content }) => {
 		try {
-			console.log({ videoId, content });
+			// console.log({ videoId, content });
 			const response = await axiosInstance.post(`/comments/${videoId}`, {
 				content,
 			});
@@ -46,16 +46,16 @@ export const editAComment = createAsyncThunk(
 
 export const deleteAComment = createAsyncThunk(
 	"deleteAComment",
-	async ( commentId ) => {
+	async (commentId) => {
 		try {
-			console.log("commentId in comment slice : ", commentId)
+			// console.log("commentId in comment slice : ", commentId);
 			const response = await axiosInstance.delete(
 				`/comments/c/${commentId}`,
 			);
 			toast.success(response.data.message);
 			return response.data.data;
 		} catch (error) {
-			console.log("error in delete comment : ",error?.message)
+			console.log("error in delete comment : ", error?.message);
 			toast.error(error?.message);
 			throw error;
 		}
@@ -69,10 +69,9 @@ export const getVideoComments = createAsyncThunk(
 			const url = new URL(`${BASE_URL}/comments/${videoId}`);
 			if (page) url.searchParams.set("page", page);
 			if (limit) url.searchParams.set("limit", limit);
-			console.log(`${BASE_URL}/comments/${videoId}`);
 
 			const response = await axiosInstance.get(url);
-			console.log(response.data.data);
+			// console.log(response.data.data);
 			return response.data.data;
 		} catch (error) {
 			toast.error(error?.response?.data?.error);

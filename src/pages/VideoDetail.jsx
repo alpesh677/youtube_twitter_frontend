@@ -123,18 +123,19 @@ function VideoDetail() {
 				isLiked={video?.isLiked}
 			/>
 
-			<div className="text-black font-semibold sm:px-5 px-3">
+			<SendComment
+			comment={true}
+			videoId={video?._id}
+			/>
+			<div className="text-black font-semibold sm:px-5 px-3 text-start">
 				{totalComments} Comments
 			</div>
-			<SendComment
-				comment={true}
-				videoId={video?._id}
-			/>
 
 			<div className="w-full sm:max-w-4xl">
 				{comments?.map((comment) => (
 					<CommentList
 						key={uuidv4()}
+						videoId = {video?._id}
 						avatar={comment?.owner?.avatar}
 						commentId={comment?._id}
 						content={comment?.content}

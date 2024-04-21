@@ -1,5 +1,4 @@
 import React from "react";
-import { Trash2 } from "lucide-react";
 
 function DeletePopUp({ onCancel, OnDelete, comment, tweet, video }) {
 	return (

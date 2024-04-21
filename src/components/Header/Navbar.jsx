@@ -33,7 +33,7 @@ function Navbar() {
 	];
 
 	const logout = async () => {
-		await dispatch(userLogout());
+		dispatch(userLogout());
 		navigate("/homepage");
 	};
 	return (

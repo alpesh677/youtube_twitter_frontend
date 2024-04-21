@@ -6,6 +6,8 @@ import DeletePopUp from "./DeletePopUp";
 import Edit from "./Edit";
 import Like from "./Like";
 import { EllipsisVertical, Trash2, Pencil } from "lucide-react";
+import { getVideoComments } from "../store/Slices/commentSlice";
+
 function CommentList({
 	avatar,
 	username,
@@ -14,6 +16,7 @@ function CommentList({
 	commentId,
 	isLiked,
 	likesCount,
+	videoId
 }) {
 	const [isEditing, setIsEditing] = useState({
 		editing: false,
@@ -29,7 +32,7 @@ function CommentList({
 	const dispatch = useDispatch();
 
 	const handleEditComment = (editedContent) => {
-		console.log(editedContent);
+		console.log("edited content :",editedContent);
 		dispatch(editAComment({ commentId, content: editedContent }));
 		setIsEditing((prev) => ({
 			...prev,
@@ -41,8 +44,8 @@ function CommentList({
 	};
 
 	const handleDeleteComment = () => {
-		console.log("commentId in handledelete function : ", commentId)
 		dispatch(deleteAComment(commentId));
+		// dispatch(getVideoComments({videoId}));
 
 		setIsEditing((prev) => ({
 			...prev,

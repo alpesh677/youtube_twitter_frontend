@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Buffer } from 'buffer';
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Signup from "./components/Signup";
@@ -12,8 +11,11 @@ import AuthLayout from "./components/AuthLayout";
 import Navbar from "./components/Header/Navbar";
 import { useNavigate } from "react-router-dom";
 import VideoDetail from "./pages/VideoDetail";
+import Sidebar from "./components/Sidebar";
+import History from "./pages/History";
+import LikedVideos from "./pages/LikedVideos";
 
-window.Buffer = Buffer;
+
 function App() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -30,7 +32,7 @@ function App() {
 			if (id) {
 				return;
 			}
-			const user = await dispatch(getCurrentUser());
+			const user = dispatch(getCurrentUser());
 			// console.log(user);
 			if (!user && publicUrl) {
 				navigate("/login");
@@ -44,6 +46,7 @@ function App() {
 	return (
 		<>
 			<Navbar />
+			<Sidebar />
 			<Routes>
 				<Route
 					path="/home"
@@ -60,6 +63,22 @@ function App() {
 					element={
 						<AuthLayout authentication={false}>
 							<VideoDetail />
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path="/history"
+					element = {
+						<AuthLayout authentication>
+							<History/>
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path="/likedVideos"
+					element = {
+						<AuthLayout authentication>
+							<LikedVideos/>
 						</AuthLayout>
 					}
 				/>

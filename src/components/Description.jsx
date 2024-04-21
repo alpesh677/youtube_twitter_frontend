@@ -42,7 +42,7 @@ function Description({
 		}
 		return () => dispatch(cleanUpComments());
 	}, [dispatch, videoId]);
-	console.log("comments", comments);
+	// console.log("comments", comments);
 
 	const [isLocalSubscribed, setIsLocalSubscribed] = useState(isSubscribed);
 	const [subscriberCount, setSubscriberCount] = useState(totalSubscribers);
@@ -66,7 +66,9 @@ function Description({
 			<div className="sm:max-w-4xl w-full p-5 sm:p-2 space-y-2 flex items-start">
 				<div className="w-full">
 					<div className="mb-2 space-y-2">
-						<h1 className="sm:text-2xl font-semibold">{title}</h1>
+						<h1 className="sm:text-2xl font-semibold text-start">
+							{title}
+						</h1>
 					</div>
 					<div className="flex justify-between items-center gap-4">
 						<Link
@@ -87,7 +89,7 @@ function Description({
 								</p>
 							</div>
 						</Link>
-						<div className="flex">
+						<div className="flex gap-2">
 							<div className="rounded-full flex justify-center w-24">
 								<Like
 									isLiked={isLiked}
@@ -96,15 +98,18 @@ function Description({
 									size={25}
 								/>
 							</div>
-						</div>
-						<div>
-							<Button
-								onClick={handlesubscribe}
-								bgColor="bg-black"
-								className="hover-slate-500 hover:scale-105 transition-all text-white rounded-3xl font-bold"
-							>
-								{isLocalSubscribed ? "subscribed" : "subscribe"}
-							</Button>
+
+							<div>
+								<Button
+									onClick={handlesubscribe}
+									bgColor="bg-black"
+									className="hover-slate-500 hover:scale-105 transition-all text-white rounded-3xl font-bold"
+								>
+									{isLocalSubscribed
+										? "subscribed"
+										: "subscribe"}
+								</Button>
+							</div>
 						</div>
 					</div>
 					<div className="mt-4 w-full bg-gray-200 rounded-xl ">
@@ -115,16 +120,14 @@ function Description({
 								{timeCreated(createdAt)}
 							</div>
 						</div>
-						<div className="flex flex-start pl-3 pb-2">
+						<div className="flex flex-start pl-3 pb-2 text-start">
 							{description}
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div>
-
-			</div>
+			<div></div>
 		</div>
 	);
 }
