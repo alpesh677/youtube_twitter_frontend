@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import {
 	History,
 	Home,
@@ -10,11 +10,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { userLogout } from "../store/Slices/authSlice";
+import Navbar from "./Header/Navbar";
+import NavMargin from "./Header/NavMargin";
 
-function Sidebar() {
+function Sidebar({ children }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	// const username = useSelector((state) => state?.auth?.userData?.username);
+	const username = useSelector((state) => state?.auth?.userData?.username);
+	console.log("username : ", username);
 
 	const sideBarItems = [
 		{
@@ -24,12 +27,12 @@ function Sidebar() {
 		},
 		{
 			icon: <LayoutDashboard size={25} />,
-			to: "/dashboard",
+			to: `/channel/${username}`,
 			title: "Dashboard",
 		},
 		{
 			icon: <SquareUserRound size={25} />,
-			to: "/channel",
+			to: "/videos",
 			title: "Your Channel",
 		},
 		{
@@ -56,32 +59,60 @@ function Sidebar() {
 
 	return (
 		<>
-			<div className="fixed top-15 left-0 sm:w-64 w-full h-screen z-50">
-				<div className="sm:block hidden">
-					<div className="text-red lg:w-66 md:w-44 w-16 border border-r border-slate-400 py-2 px-1 flex flex-col">
-						<div className="flex flex-col gap-2 mt-2">
-							{sideBarItems.map((item) => (
-								<NavLink
-									to={item.to}
-									key={item.title}
-									className={({ isActive }) =>
-										isActive ? "bg-sky-500" : ""
-									}
-								>
-									<div className="flex sm:items-start flex-col cursor-pointer py-1 px-2 border border-slate-600">
-										{item.icon}
-										<div className="text-base hidden md:block">
-											{item.title}
-										</div>
-									</div>
-								</NavLink>
-							))}
-						</div>
-					</div>
+			<Navbar />
+			<NavMargin/>
+			<div className="grid grid-cols-12 gap-2">
+				<div className="xl:col-span-1 md:col-span-2 sm:col-span-1 col-span-2 flex flex-col gap-2 p-2">
+					{sideBarItems.map((item) => (
+						<NavLink
+							to={item.to}
+							key={item.title}
+							// className={({ isActive }) =>
+							// 	isActive ? "bg-sky-500" : "bg-slate-300"
+							// }
+							className={({ isActive }) =>
+								`bg-blue-200 rounded-md ${
+									isActive ? "bg-blue-700 text-white" : ""
+								}`
+							}
+						>
+							<div className="flex sm:items-start flex-col cursor-pointer py-1 px-2 ">
+								{item.icon}
+								<div className="text-base hidden md:block">
+									{item.title}
+								</div>
+							</div>
+						</NavLink>
+					))}
 				</div>
+				<div className="xl:col-span-11 md:col-span-10 sm:col-span-11 col-span-10">{children}</div>
 			</div>
 		</>
 	);
 }
 
 export default Sidebar;
+// <div className="fixed bg-blue-200 top-0 left-0 w-fit h-screen z-50">
+// 	<div className="sm:block hidden">
+// 		<div className="text-red lg:w-66 md:w-44 w-16 border border-r border-slate-400 py-2 px-1 flex flex-col">
+// 			<div className="flex flex-col gap-2 mt-2">
+// 				{sideBarItems.map((item) => (
+// 					<NavLink
+// 						to={item.to}
+// 						key={item.title}
+// 						className={({ isActive }) =>
+// 							isActive ? "bg-sky-500" : ""
+// 						}
+// 					>
+// 						<div className="flex sm:items-start flex-col cursor-pointer py-1 px-2 border border-slate-600">
+// 							{item.icon}
+// 							<div className="text-base hidden md:block">
+// 								{item.title}
+// 							</div>
+// 						</div>
+// 					</NavLink>
+// 				))}
+// 			</div>
+// 		</div>
+// 	</div>
+// </div>

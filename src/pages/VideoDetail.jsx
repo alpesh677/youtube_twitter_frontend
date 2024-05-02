@@ -24,7 +24,7 @@ function VideoDetail() {
 
 	useEffect(() => {
 		dispatch(getVideoById({ videoId }));
-	}, [dispatch, videoId]);
+	}, [videoId]);
 
 	// console.log(video);
 	// useEffect(() => {
@@ -47,7 +47,7 @@ function VideoDetail() {
 	const playerRef = React.useRef(null);
 	const videoURL = video?.videoFile?.url;
 	const thumbnailURL = video?.thumbnail?.url;
-	const uniqueId = uuidv4()
+	const uniqueId = uuidv4();
 	const parts = videoURL
 		? videoURL.split(".")[videoURL.split(".").length - 1]
 		: "";
@@ -100,6 +100,9 @@ function VideoDetail() {
 			videojs.log("player will dispose");
 		});
 	};
+	const sortedComments = [...comments]
+		.sort((a, b) => new Date(a?.createdAt) - new Date(b?.createdAt))
+		.reverse();
 	return (
 		<>
 			<VideoJS
@@ -123,29 +126,28 @@ function VideoDetail() {
 				isLiked={video?.isLiked}
 			/>
 
-			<SendComment
-			comment={true}
-			videoId={video?._id}
-			/>
+			<SendComment comment={true} videoId={video?._id} />
 			<div className="text-black font-semibold sm:px-5 px-3 text-start">
 				{totalComments} Comments
 			</div>
 
 			<div className="w-full sm:max-w-4xl">
-				{comments?.map((comment) => (
-					<CommentList
-						key={uuidv4()}
-						videoId = {video?._id}
-						avatar={comment?.owner?.avatar}
-						commentId={comment?._id}
-						content={comment?.content}
-						createdAt={comment?.createdAt}
-						fullName={comment?.owner?.fullName}
-						isLiked={comment?.isLiked}
-						likesCount={comment?.totalLikes}
-						username={comment?.owner?.username}
-					/>
-				))}
+				{comments &&
+					sortedComments.map((comment) => (
+						<div className="" key={comment?._id}>
+							<CommentList
+								videoId={video?._id}
+								avatar={comment?.owner?.avatar}
+								commentId={comment?._id}
+								content={comment?.content}
+								createdAt={comment?.createdAt}
+								fullName={comment?.owner?.fullName}
+								isLiked={comment?.isLiked}
+								likesCount={comment?.totalLikes}
+								username={comment?.owner?.username}
+							/>
+						</div>
+					))}
 			</div>
 		</>
 	);

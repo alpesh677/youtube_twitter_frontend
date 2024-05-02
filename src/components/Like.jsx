@@ -51,16 +51,16 @@ function Like({ isLiked, likeCount = 0, tweetId, videoId, commentId, size }) {
 
 	return (
 		<>
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-2 mt-4">
 				<ThumbsUp
 					size={size}
 					onClick={handleLike}
-					className={`cursor-pointer ${
+					className={`cursor-pointer my-auto ${
 						isLocalLiked ? "text-purple-500" : ""
 					}`}
 				/>
-				<span className="text-sm mr-3">{localLikeCount}</span>
-				<ThumbsDown size={size} onClick={handleDislike} className={`cursor-pointer ${
+				<span className="text-sm mr-3 my-auto">{localLikeCount}</span>
+				<ThumbsDown size={size} onClick={handleDislike} className={`cursor-pointer my-auto ${
 					isLocalDisliked ? "text-purple-500" : ""
 				}`}/>
 			</div>

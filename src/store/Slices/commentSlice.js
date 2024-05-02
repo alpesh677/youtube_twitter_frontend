@@ -18,6 +18,7 @@ export const createAComment = createAsyncThunk(
 			const response = await axiosInstance.post(`/comments/${videoId}`, {
 				content,
 			});
+			console.log(response.data.data)
 			return response.data.data;
 		} catch (error) {
 			toast.error(error?.response?.data?.error);
@@ -71,7 +72,7 @@ export const getVideoComments = createAsyncThunk(
 			if (limit) url.searchParams.set("limit", limit);
 
 			const response = await axiosInstance.get(url);
-			// console.log(response.data.data);
+			console.log(response.data.data);
 			return response.data.data;
 		} catch (error) {
 			toast.error(error?.response?.data?.error);
@@ -101,14 +102,16 @@ const commentSlice = createSlice({
 			state.hasNextPage = action.payload.hasNextPage;
 		});
 
-		builder.addCase(createAComment.fulfilled, (state, action) => {
-			state.comments.unshift(action.payload);
-			state.totalComments++;
-		});
+		// builder.addCase(createAComment.fulfilled, (state, action) => {
+		// 	console.log(action);
+		// 	state.comments.unshift(action.payload);
+		// 	state.totalComments++;
+		// });
 
 		builder.addCase(deleteAComment.fulfilled, (state, action) => {
+			console.log(action, state.comments);
 			state.comments = state.comments.filter(
-				(comment) => comment._id !== action.payload.commentId,
+				(comment) => comment._id !== action.meta.arg,
 			);
 			state.totalComments--;
 		});

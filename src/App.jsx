@@ -14,7 +14,8 @@ import VideoDetail from "./pages/VideoDetail";
 import Sidebar from "./components/Sidebar";
 import History from "./pages/History";
 import LikedVideos from "./pages/LikedVideos";
-
+import Dashboard from "./pages/Dashboard";
+import ChannelVideos from "./pages/ChannelVideos";
 
 function App() {
 	const dispatch = useDispatch();
@@ -45,45 +46,60 @@ function App() {
 	};
 	return (
 		<>
-			<Navbar />
-			<Sidebar />
-			<Routes>
-				<Route
-					path="/home"
-					element={
-						<AuthLayout authentication={false}>
-							{<HomePage />}
-						</AuthLayout>
-					}
-				/>
-				<Route path="/login" element={<Login />} />
-				<Route path="signup" element={<Signup />} />
-				<Route
-					path="/watch/:videoId"
-					element={
-						<AuthLayout authentication={false}>
-							<VideoDetail />
-						</AuthLayout>
-					}
-				/>
-				<Route
-					path="/history"
-					element = {
-						<AuthLayout authentication>
-							<History/>
-						</AuthLayout>
-					}
-				/>
-				<Route
-					path="/likedVideos"
-					element = {
-						<AuthLayout authentication>
-							<LikedVideos/>
-						</AuthLayout>
-					}
-				/>
-			</Routes>
-
+			<Sidebar>
+				<Routes>
+					<Route
+						path="/home"
+						element={
+							<AuthLayout authentication={false}>
+								{<HomePage />}
+							</AuthLayout>
+						}
+					/>
+					<Route path="/login" element={<Login />} />
+					<Route path="signup" element={<Signup />} />
+					<Route
+						path="/watch/:videoId"
+						element={
+							<AuthLayout authentication={false}>
+								<VideoDetail />
+							</AuthLayout>
+						}
+					/>
+					<Route
+						path="/history"
+						element={
+							<AuthLayout authentication>
+								<History />
+							</AuthLayout>
+						}
+					/>
+					<Route
+						path="/likedVideos"
+						element={
+							<AuthLayout authentication>
+								<LikedVideos />
+							</AuthLayout>
+						}
+					/>
+					<Route
+						path="/channel/:username"
+						element={
+							<AuthLayout authentication>
+								<Dashboard />
+							</AuthLayout>
+						}
+					/>
+					<Route
+						path="/channel/:username/videos"
+						element={
+							<AuthLayout authentication>
+								<ChannelVideos />
+							</AuthLayout>
+						}
+					/>
+				</Routes>
+			</Sidebar>
 			<Toaster
 				position="top-right"
 				reverseOrder={true}

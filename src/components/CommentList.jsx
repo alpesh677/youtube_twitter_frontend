@@ -16,7 +16,7 @@ function CommentList({
 	commentId,
 	isLiked,
 	likesCount,
-	videoId
+	videoId,
 }) {
 	const [isEditing, setIsEditing] = useState({
 		editing: false,
@@ -32,7 +32,7 @@ function CommentList({
 	const dispatch = useDispatch();
 
 	const handleEditComment = (editedContent) => {
-		console.log("edited content :",editedContent);
+		console.log("edited content :", editedContent);
 		dispatch(editAComment({ commentId, content: editedContent }));
 		setIsEditing((prev) => ({
 			...prev,
@@ -55,7 +55,7 @@ function CommentList({
 
 	return (
 		<>
-			<div className="w-full text-black flex justify-start items-center sm:gap-5 gap-3 border-b border-slate-600 p-3 sm:p-3">
+			<div className="w-full text-black flex justify-start items-center sm:gap-5 gap-3 p-3 sm:p-3 hover:bg-slate-200 rounded-3xl transition duration-500 ease-in-out">
 				<div className="w-12">
 					<img
 						src={avatar2 || avatar}
@@ -65,7 +65,7 @@ function CommentList({
 				</div>
 				<div className="w-full flex flex-col gap-1 relative">
 					<div className="flex items-center gap-2">
-						<h2 className="text-5xl">{username}</h2>
+						<h2 className="text-lg font-bold">{username}</h2>
 						<span className="text-xs text-slate-400">
 							{timeCreated(createdAt)}
 						</span>

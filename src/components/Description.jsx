@@ -13,13 +13,13 @@ import {
 } from "../store/Slices/commentSlice";
 
 function Description({
+	key,
 	avatar,
 	title,
 	channelName,
 	createdAt,
 	description,
 	views,
-	videoKey,
 	channelId,
 	videoId,
 	totalSubscribers,
@@ -34,20 +34,17 @@ function Description({
 		if (videoId) {
 			dispatch(
 				getVideoComments({
-					videoId: videoKey,
+					videoId,
 					page: 1,
 					limit: 10,
 				}),
 			);
 		}
 		return () => dispatch(cleanUpComments());
-	}, [dispatch, videoId]);
-	// console.log("comments", comments);
+	}, [videoId]);
 
 	const [isLocalSubscribed, setIsLocalSubscribed] = useState(isSubscribed);
 	const [subscriberCount, setSubscriberCount] = useState(totalSubscribers);
-	// console.log(channelId)
-	// console.log(videoId)
 
 	const handlesubscribe = () => {
 		dispatch(toggleSubscriptions(channelId));
@@ -120,7 +117,7 @@ function Description({
 								{timeCreated(createdAt)}
 							</div>
 						</div>
-						<div className="flex flex-start pl-3 pb-2 text-start">
+						<div className="flex flex-start p-4 text-start">
 							{description}
 						</div>
 					</div>
